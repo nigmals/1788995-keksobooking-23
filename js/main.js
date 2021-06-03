@@ -9,7 +9,7 @@ function getRandomIntegerFromRange (min, max) {
   if (intervalLength <= 0) {
     throw new Error ('Некорректные границы интервала');
   }
-  if (ceiledMin < 0 || floorMax< 0 || floorMax <= ceiledMin) {
+  if (ceiledMin < 0 || floorMax < 0 || floorMax <= ceiledMin) {
     throw new Error ('Оба аргумента должны быть положительными и  второй аргумент больше первого!');
   }
 
