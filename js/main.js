@@ -52,8 +52,11 @@ function getRandomPositiveInteger (min, max) {
   return Math.floor(result);
 }
 
-const getRandomArrayElement = (elements) => elements[getRandomPositiveInteger(0, elements.length - 1)];
+const getRandomArrayElement = (elements) => (
+  elements[getRandomPositiveInteger(0, elements.length - 1)]
+);
 
+// массив случайной длины из неповторяющихся значений. Из https://qna.habr.com/q/844269
 const shuffleArr = ([...source], maxLength) => Array.from(
   { length: Math.min(source.length, 1 + Math.random() * maxLength | 0) },
   () => source.splice(Math.random() * source.length | 0, 1)[0]);
@@ -63,15 +66,13 @@ shuffleArr;
 const lat = getRandomPositiveFloat(35.65000,  35.70000, 5);
 const lon = getRandomPositiveFloat(139.70000, 139.80000, 5);
 
-const AVATARS = [];
-for ( let count = 1; count <= 11; count++ ) {
-  const zeroInt = (count < 10) ? 0 : '';
-  AVATARS.push(`img/avatars/user${  zeroInt  }${count  }.png`);
-}
+const avatars = new Array(10)
+  .fill()
+  .map((value, index) => `img/avatars/user0${index + 1}.png`);
 
 const createAd = () => ({
   author: {
-    avatar: getRandomArrayElement(AVATARS),
+    avatar: getRandomArrayElement(avatars),
   },
   offer: {
     title: 'Заголовок',
