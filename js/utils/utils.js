@@ -1,3 +1,13 @@
+function getRandomPositiveInteger (min,max) {
+
+  const lower = Math.ceil(Math.min(Math.abs(min), Math.abs(max)));
+  const upper = Math.floor(Math.max(Math.abs(min), Math.abs(max)));
+
+  const result = Math.random() * (upper - lower + 1) + lower;
+
+  return Math.floor(result);
+}
+
 function getRandomPositiveFloat (min, max, digits = 1) {
 
   const lower = Math.min(Math.abs(min), Math.abs(max));
@@ -8,12 +18,8 @@ function getRandomPositiveFloat (min, max, digits = 1) {
   return result.toFixed(digits);
 }
 
-function getRandomPositiveInteger (min, max) {
+export {
+  getRandomPositiveInteger,
+  getRandomPositiveFloat
+};
 
-  const lower = Math.ceil(Math.min(Math.abs(min), Math.abs(max)));
-  const upper = Math.floor(Math.max(Math.abs(min), Math.abs(max)));
-
-  const result = Math.random() * (upper - lower + 1) + lower;
-
-  return Math.floor(result);
-}
