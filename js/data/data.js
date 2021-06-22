@@ -36,7 +36,6 @@ const ALL_PHOTOS = [
 
 const SIMILAR_COUNT = 10;
 
-
 const getRandomArrayElement = (elements) => (
   elements[getRandomPositiveInteger(0, elements.length - 1)]
 );
@@ -83,4 +82,3 @@ const similarAd = new Array(SIMILAR_COUNT)
   .map(createAd);
 
 export {similarAd};
-
