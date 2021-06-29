@@ -54,28 +54,29 @@ const avatars = new Array(10)
   .fill()
   .map((value, index) => `img/avatars/user0${index + 1}.png`);
 
-const createAd = () => ({
-  author: {
-    avatar: getRandomArrayElement(avatars),
-  },
-  offer: {
-    title: 'Заголовок',
-    address: `Широта: ${lat}, Долгота: ${lon}`,
-    price: getRandomPositiveInteger(10000, 1000000),
-    type: getRandomArrayElement(TYPES_OF_HOUSING),
-    rooms: getRandomPositiveInteger(1, 100),
-    guests: getRandomPositiveInteger(1, 100),
-    checkin: getRandomArrayElement(CHECKIN_TIMES),
-    checkout: getRandomArrayElement(CHECKOUT_TIMES),
-    features: shuffleArr(ALL_FEATURES, 5),
-    description: 'Описание',
-    photos: shuffleArr(ALL_PHOTOS, 3),
-  },
-  location: {
-    lat: lat,
-    lng: lon,
-  },
-});
+const createAd = () => {
+  const author = new Object();
+  author.avatar = getRandomArrayElement(avatars);
+
+  const offer = new Object();
+  offer.title = 'Заголовок';
+  offer.address = `Широта: ${lat}, Долгота: ${lon}`;
+  offer.price = getRandomPositiveInteger(10000, 1000000);
+  offer.type = getRandomArrayElement(TYPES_OF_HOUSING);
+  offer.rooms = getRandomPositiveInteger(1, 100);
+  offer.guests = getRandomPositiveInteger(1, 100);
+  offer.checkin = getRandomArrayElement(CHECKIN_TIMES);
+  offer.checkout = getRandomArrayElement(CHECKOUT_TIMES);
+  offer.features = shuffleArr(ALL_FEATURES, 5);
+  offer.description = 'Описание';
+  offer.photos = shuffleArr(ALL_PHOTOS, 3);
+
+  const location = new Object();
+  location.lat = lat;
+  location.lng = lon;
+
+  return {author, offer, location};
+};
 
 const similarAd = new Array(SIMILAR_COUNT)
   .fill(null)
