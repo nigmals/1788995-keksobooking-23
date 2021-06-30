@@ -8,13 +8,7 @@ const TYPES_OF_HOUSING = [
   'hotel',
 ];
 
-const CHECKIN_TIMES = [
-  '12:00',
-  '13:00',
-  '14:00',
-];
-
-const CHECKOUT_TIMES = [
+const TIMES = [
   '12:00',
   '13:00',
   '14:00',
@@ -63,10 +57,10 @@ const createAd = () => {
   offer.address = `Широта: ${lat}, Долгота: ${lon}`;
   offer.price = getRandomPositiveInteger(10000, 1000000);
   offer.type = getRandomArrayElement(TYPES_OF_HOUSING);
-  offer.rooms = getRandomPositiveInteger(1, 100);
-  offer.guests = getRandomPositiveInteger(1, 100);
-  offer.checkin = getRandomArrayElement(CHECKIN_TIMES);
-  offer.checkout = getRandomArrayElement(CHECKOUT_TIMES);
+  offer.rooms = getRandomPositiveInteger(1, 3);
+  offer.guests = getRandomPositiveInteger(1, 3);
+  offer.checkin = getRandomArrayElement(TIMES);
+  offer.checkout = getRandomArrayElement(TIMES);
   offer.features = shuffleArr(ALL_FEATURES, 5);
   offer.description = 'Описание';
   offer.photos = shuffleArr(ALL_PHOTOS, 3);
@@ -82,4 +76,4 @@ const similarAd = new Array(SIMILAR_COUNT)
   .fill(null)
   .map(createAd);
 
-export {similarAd};
+export { similarAd };
