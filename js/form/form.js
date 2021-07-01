@@ -99,4 +99,3 @@ adTypeSelect.addEventListener('change', (evt) => {
 });
 
 export { diactivateForm, activateForm };
-
