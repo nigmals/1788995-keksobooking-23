@@ -13,13 +13,13 @@ const adCapacitySelect = offerForm.querySelector('#capacity');
 const adCapacitySelectOption = adCapacitySelect.querySelectorAll('option');
 const adRoomNumberSelect = offerForm.querySelector('#room_number');
 const adTypeSelect = offerForm.querySelector('#type');
-const adAddress = offerForm.querySelector('#address').value='123123';
 
 const roomsValue = {
   1: [1],
   2: [1, 2],
   3: [1, 2, 3],
   100: [0],
+
 };
 
 const typePrice = {
