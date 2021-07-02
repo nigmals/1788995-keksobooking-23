@@ -1,5 +1,7 @@
 const MIN_NAME_LENGTH = 30;
 const MAX_NAME_LENGTH = 100;
+const MAX_PRICE_LENGTH = 1000000;
+const MIN_PRICE_LENGTH = 0;
 const offerForm = document.querySelector('.ad-form');
 const adFormElement = offerForm.querySelectorAll('.ad-form__element');
 const mapFiltersForm = document.querySelector('.map__filters');
@@ -11,6 +13,7 @@ const adCapacitySelect = offerForm.querySelector('#capacity');
 const adCapacitySelectOption = adCapacitySelect.querySelectorAll('option');
 const adRoomNumberSelect = offerForm.querySelector('#room_number');
 const adTypeSelect = offerForm.querySelector('#type');
+const adAddress = offerForm.querySelector('#address').value='123123';
 
 const roomsValue = {
   1: [1],
@@ -59,13 +62,11 @@ offerTitle.addEventListener('input', () => {
 
 offerPrice.addEventListener('input', () => {
   const valueInput = offerPrice.value;
-  const minPrice = offerPrice.getAttribute('min');
-  const maxPrice = offerPrice.getAttribute('max');
 
-  if (valueInput < minPrice) {
-    offerPrice.setCustomValidity(`Минимальная цена ${minPrice}`);
-  } else if (valueInput > maxPrice) {
-    offerPrice.setCustomValidity(`Максимальная цена ${maxPrice}`);
+  if (valueInput < MIN_PRICE_LENGTH) {
+    offerPrice.setCustomValidity(`Минимальная цена ${MIN_PRICE_LENGTH}`);
+  } else if (valueInput >MAX_PRICE_LENGTH) {
+    offerPrice.setCustomValidity(`Максимальная цена ${MAX_PRICE_LENGTH}`);
   } else {
     offerPrice.setCustomValidity('');
   }
