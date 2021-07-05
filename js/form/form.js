@@ -13,6 +13,8 @@ const adCapacitySelect = offerForm.querySelector('#capacity');
 const adCapacitySelectOption = adCapacitySelect.querySelectorAll('option');
 const adRoomNumberSelect = offerForm.querySelector('#room_number');
 const adTypeSelect = offerForm.querySelector('#type');
+const adTypeSelect = offerForm.querySelector('#type');
+const adAddress = offerForm.querySelector('#address');
 
 const roomsValue = {
   1: [1],
@@ -89,6 +91,14 @@ const onRoomChange = (evt) => {
 };
 
 onRoomChange(adRoomNumberSelect);
+
+adTimeInSelect.addEventListener('change', () => {
+  adTimeOutSelect.value = adTimeInSelect.value;
+});
+
+adTimeOutSelect.addEventListener('change', () => {
+  adTimeInSelect.value = adTimeOutSelect.value;
+});
 
 adRoomNumberSelect.addEventListener('change', (evt) =>{
   onRoomChange(evt.target);
