@@ -15,6 +15,7 @@ const adRoomNumberSelect = offerForm.querySelector('#room_number');
 const adTypeSelect = offerForm.querySelector('#type');
 const adTimeInSelect = offerForm.querySelector('#timein');
 const adTimeOutSelect = offerForm.querySelector('#timeout');
+const adAddress = offerForm.querySelector('#address');
 
 const roomsValue = {
   1: [1],
@@ -109,4 +110,4 @@ adTypeSelect.addEventListener('change', (evt) => {
   offerPrice.setAttribute('min', typePrice[evt.target.value]);
 });
 
-export { diactivateForm, activateForm };
+export { diactivateForm, activateForm, adAddress };
