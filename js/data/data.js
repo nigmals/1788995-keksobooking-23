@@ -1,4 +1,7 @@
-import { getRandomPositiveInteger, getRandomPositiveFloat } from '../utils/utils.js';
+import { getRandomPositiveInteger,
+  getRandomPositiveFloat,
+  shuffleArr,
+  getRandomArrayElement } from '../utils/utils.js';
 
 const TYPES_OF_HOUSING = [
   'palace',
@@ -6,6 +9,31 @@ const TYPES_OF_HOUSING = [
   'house',
   'bungalow',
   'hotel',
+];
+
+const TITLES = [
+  'the square GINZA ',
+  'Hotel Graphy Nezu',
+  'Hotel Nihonbashi Saibo',
+  'Like Home - Santos',
+  'Tokio Serviced Apartments - Campos ',
+  'Tokio Serviced Apartments - Madalena',
+  'Minn Ueno',
+  'Comfort Tokyo Kanda',
+  'Best Western Fino Tokyo Akihabara ',
+  'TRUNK',
+];
+const DESCRIPTIONS = [
+  'Рядом есть все необходимые магазины, аптеки, дет.сад в 10 минутах, школа в 20 мин. ходьбы',
+  'Окна выходят во двор, есть свое пароковчное место, 20 минут от метро',
+  'С дизайнерским ремонтом, есть лоджия, вся необходимая мебель и техника, рядом есть парк',
+  'Находится в историческом центре города, рядом есть музеи, рестораны и кафешки, где подают вкусные круассаны',
+  'Находится на уютной улочке, где можно забежать за ванильным латте и свежим пироженым, недалеко есть парк, бар и клуб. Идеально для тусовщиков и любителям бегать по парку',
+  'Идеально для тех, кто любит спальные районы. Покой, тишина, без шумных соседей и свежий ремонт',
+  'Расположение в отличном районе, в 5 минут от станции, рядом аквапарк',
+  '650 метрах от популярного района, есть все удобства',
+  'С живописным садом расположен в историческом здании, спальный район',
+  'Еще одно балдежное и красивое описание',
 ];
 
 const TIMES = [
@@ -30,50 +58,38 @@ const ALL_PHOTOS = [
 
 const SIMILAR_COUNT = 10;
 
-const getRandomArrayElement = (elements) => (
-  elements[getRandomPositiveInteger(0, elements.length - 1)]
-);
-
-// массив случайной длины из неповторяющихся значений. Из https://qna.habr.com/q/844269
-const shuffleArr = ([...source], maxLength) => Array.from(
-  { length: Math.min(source.length, 1 + Math.random() * maxLength | 0) },
-  () => source.splice(Math.random() * source.length | 0, 1)[0]);
-
-shuffleArr;
-
-const lat = getRandomPositiveFloat(35.65000,  35.70000, 5);
-const lon = getRandomPositiveFloat(139.70000, 139.80000, 5);
-
-const avatars = new Array(10)
+const AVATARS = new Array(10)
   .fill()
   .map((value, index) => `img/avatars/user0${index + 1}.png`);
 
 const createAd = () => {
-  const author = new Object();
-  author.avatar = getRandomArrayElement(avatars);
+  const COORDINATES = {
+    lat: getRandomPositiveFloat(35.65, 35.7, 5),
+    lng: getRandomPositiveFloat(139.7, 139.8, 5),
+  };
 
-  const offer = new Object();
-  offer.title = 'Заголовок';
-  offer.address = `Широта: ${lat}, Долгота: ${lon}`;
-  offer.price = getRandomPositiveInteger(10000, 1000000);
-  offer.type = getRandomArrayElement(TYPES_OF_HOUSING);
-  offer.rooms = getRandomPositiveInteger(1, 3);
-  offer.guests = getRandomPositiveInteger(1, 3);
-  offer.checkin = getRandomArrayElement(TIMES);
-  offer.checkout = getRandomArrayElement(TIMES);
-  offer.features = shuffleArr(ALL_FEATURES, 5);
-  offer.description = 'Описание';
-  offer.photos = shuffleArr(ALL_PHOTOS, 3);
-
-  const location = new Object();
-  location.lat = lat;
-  location.lng = lon;
-
-  return {author, offer, location};
+  return {
+    author: {
+      avatar: getRandomArrayElement(AVATARS),
+    },
+    offer: {
+      title: getRandomArrayElement(TITLES),
+      address: `Широта: ${COORDINATES.lat}, Долгота: ${COORDINATES.lng}`,
+      price: getRandomPositiveInteger(0, 13000),
+      type: getRandomArrayElement(Object.values(TYPES_OF_HOUSING)),
+      rooms: getRandomPositiveInteger(1, 3),
+      guests: getRandomPositiveInteger(1, 3),
+      checkin: getRandomArrayElement(TIMES),
+      checkout: getRandomArrayElement(TIMES),
+      features: shuffleArr(ALL_FEATURES),
+      descriptions: getRandomArrayElement(DESCRIPTIONS),
+      photos: shuffleArr(ALL_PHOTOS),
+    },
+    location: {
+      lat: COORDINATES.lat,
+      lng: COORDINATES.lng,
+    },
+  };
 };
 
-const similarAd = new Array(SIMILAR_COUNT)
-  .fill(null)
-  .map(createAd);
-
-export { similarAd };
+export { SIMILAR_COUNT, createAd };

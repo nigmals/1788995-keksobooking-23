@@ -18,8 +18,26 @@ function getRandomPositiveFloat (min, max, digits = 1) {
   return result.toFixed(digits);
 }
 
+const getRandomArrayElement = (elements) => (
+  elements[getRandomPositiveInteger(0, elements.length - 1)]
+);
+
+// массив случайной длины из неповторяющихся значений. Из https://qna.habr.com/q/844269
+// Не работает нифига
+// const shuffleArr = ([...source], maxLength) => Array.from(
+//  { length: Math.min(source.length, 1 + Math.random() * maxLength | 0) },
+//  () => source.splice(Math.random() * source.length | 0, 1)[0]);
+
+const shuffleArr = (items) => {
+  const randomIndex = getRandomPositiveInteger(0, items.length - 1);
+  const randomFeatures = items.slice(0, randomIndex + 1);
+  return randomFeatures;
+};
+
 export {
   getRandomPositiveInteger,
-  getRandomPositiveFloat
+  getRandomPositiveFloat,
+  shuffleArr,
+  getRandomArrayElement
 };
 
