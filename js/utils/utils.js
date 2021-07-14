@@ -34,10 +34,13 @@ const shuffleArr = (items) => {
   return randomFeatures;
 };
 
+const isEscEvent = (evt) => (evt.key === 'Escape' || evt.key === 'Esc');
+
 export {
   getRandomPositiveInteger,
   getRandomPositiveFloat,
   shuffleArr,
-  getRandomArrayElement
+  getRandomArrayElement,
+  isEscEvent
 };
 

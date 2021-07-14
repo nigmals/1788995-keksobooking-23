@@ -1,3 +1,7 @@
+import { sendData } from './api.js';
+import { resetDataMap } from '../map/map.js';
+import { showPopupSendSuccess, showPopupSendError } from './popup.js';
+
 const MIN_NAME_LENGTH = 30;
 const MAX_NAME_LENGTH = 100;
 const MAX_PRICE_LENGTH = 1000000;
@@ -16,6 +20,7 @@ const adTypeSelect = offerForm.querySelector('#type');
 const adTimeInSelect = offerForm.querySelector('#timein');
 const adTimeOutSelect = offerForm.querySelector('#timeout');
 const adAddress = offerForm.querySelector('#address');
+const resetButton = document.querySelector('.ad-form__reset');
 
 const roomsValue = {
   1: [1],
@@ -110,4 +115,21 @@ adTypeSelect.addEventListener('change', (evt) => {
   offerPrice.setAttribute('min', typePrice[evt.target.value]);
 });
 
-export { diactivateForm, activateForm, adAddress };
+const clearForm = () => {
+  mapFiltersForm.reset();
+  offerForm .reset();
+  resetDataMap();
+};
+resetButton.addEventListener('click', (evt) => {
+  evt.preventDefault();
+  clearForm();
+});
+
+offerForm.addEventListener('submit', (evt) => {
+  evt.preventDefault();
+  const formData = new FormData(evt.target);
+
+  sendData(showPopupSendSuccess, showPopupSendError, formData);
+});
+
+export { diactivateForm, activateForm, clearForm, adAddress };
