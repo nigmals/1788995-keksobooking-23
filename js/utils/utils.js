@@ -1,4 +1,4 @@
-function getRandomPositiveInteger (min,max) {
+/* function getRandomPositiveInteger (min,max) {
 
   const lower = Math.ceil(Math.min(Math.abs(min), Math.abs(max)));
   const upper = Math.floor(Math.max(Math.abs(min), Math.abs(max)));
@@ -33,14 +33,19 @@ const shuffleArr = (items) => {
   const randomFeatures = items.slice(0, randomIndex + 1);
   return randomFeatures;
 };
-
+*/
 const isEscEvent = (evt) => (evt.key === 'Escape' || evt.key === 'Esc');
 
-export {
-  getRandomPositiveInteger,
-  getRandomPositiveFloat,
-  shuffleArr,
-  getRandomArrayElement,
-  isEscEvent
-};
+function debounce (callback, timeoutDelay = 500) {
+  let timeoutId;
+
+  return (...rest) => {
+    clearTimeout(timeoutId);
+
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
+}
+
+export { isEscEvent, debounce };
+
 
