@@ -1028,3 +1028,15 @@ fieldset {
 .hidden {
   display: none;
 }
+.error__popup {
+  z-index: 100;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  right: 0px;
+  padding: 10px 5px;
+  font-size: 20px;
+  text-align: left;
+  background-color: red;
+  color: rgb(24, 24, 24);
+}

@@ -1,4 +1,4 @@
-import { activateForm } from '../form/form.js';
+import { activateForm, adAddress } from '../form/form.js';
 import { createCard } from './cards.js';
 
 const INITIAL_SETTING_MAP = {
@@ -6,15 +6,15 @@ const INITIAL_SETTING_MAP = {
   lng: 139.75000,
 };
 
-const addressInput = document.querySelector('#address');
+//const addressInput = document.querySelector('#address');
 
 const mapCanvas = L.map('map-canvas')
   .on('load', () => {
     activateForm();
   })
   .setView({
-    lat: INITIAL_SETTING_MAP .lat,
-    lng: INITIAL_SETTING_MAP .lng,
+    lat: INITIAL_SETTING_MAP.lat,
+    lng: INITIAL_SETTING_MAP.lng,
   }, 14);
 
 L.tileLayer(
@@ -45,10 +45,10 @@ const mainMarker = L.marker(
 
 mainMarker.addTo(mapCanvas);
 
-addressInput.value = `${mainMarker._latlng.lat.toFixed(5)}, ${mainMarker._latlng.lng.toFixed(5)}`;
+adAddress.value = `${mainMarker._latlng.lat.toFixed(5)}, ${mainMarker._latlng.lng.toFixed(5)}`;
 
 mainMarker.on('moveend', (evt) => {
-  addressInput.value = `${evt.target.getLatLng().lat.toFixed(5)}, ${evt.target.getLatLng().lng.toFixed(5)}`;
+  adAddress.value = `${evt.target.getLatLng().lat.toFixed(5)}, ${evt.target.getLatLng().lng.toFixed(5)}`;
 });
 
 const markerGroup = L.layerGroup().addTo(mapCanvas);
@@ -79,5 +79,22 @@ const createAdMarker = (dataAd) => {
   markerAd.addTo(markerGroup).bindPopup(createCard(dataAd));
 };
 
+const createMarkersGroup = (similarAd) => {
+  similarAd.forEach((dataAd) => {
+    createAdMarker(dataAd);
+  });
+};
 
-export { createAdMarker };
+const resetDataMap = () => {
+  mapCanvas.setView(
+    INITIAL_SETTING_MAP,
+    12);
+
+  mainMarker.setLatLng(
+    INITIAL_SETTING_MAP,
+  );
+
+  adAddress.value = `${INITIAL_SETTING_MAP.lat.toFixed(5)}, ${INITIAL_SETTING_MAP.lng.toFixed(5)}`;
+};
+
+export { createAdMarker, resetDataMap, createMarkersGroup };

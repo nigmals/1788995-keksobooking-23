@@ -18,7 +18,6 @@ const createCard = (similarOffer) => {
   offerElement.querySelector('.popup__type').textContent = TYPES[similarOffer.offer.type];
   offerElement.querySelector('.popup__description').textContent = similarOffer.offer.description;
 
-  // Вывод доступных удобств;
   const featuresList = offerElement.querySelector('.popup__features');
   const fragment = document.createDocumentFragment();
   featuresList.innerHTML = '';
@@ -32,8 +31,6 @@ const createCard = (similarOffer) => {
 
   offerElement.querySelector('.popup__description').textContent = similarOffer.offer.description;
 
-  // Вывод фотографий;
-
   const photosBlock = offerElement.querySelector('.popup__photos');
   const photoElement = photosBlock.querySelector('.popup__photo');
   photosBlock.removeChild(photoElement);
@@ -44,7 +41,6 @@ const createCard = (similarOffer) => {
   }
   photosBlock.appendChild(fragment);
 
-  // Проверяем, если не хватает данных, например, отсутствует описание, то скрываем блок;
   if (similarOffer.offer.description === '') {
     offerElement.querySelector('.popup__description').classList.add('hidden');
   }
