@@ -1,28 +1,17 @@
-import { activateForm, adAddress } from '../form/form.js';
+import { activateForm } from '../form/form.js';
 import { createCard } from './cards.js';
+import { getData } from '../form/api.js';
+import { showPopupGetError } from '../form/popup.js';
+import { onFilter, addFilters, MAX_NUM_ADS } from '../map/filter/filter.js';
 
 const INITIAL_SETTING_MAP = {
   lat: 35.67500,
   lng: 139.75000,
 };
 
-//const addressInput = document.querySelector('#address');
+const adAddress = document.querySelector('#address');
 
-const mapCanvas = L.map('map-canvas')
-  .on('load', () => {
-    activateForm();
-  })
-  .setView({
-    lat: INITIAL_SETTING_MAP.lat,
-    lng: INITIAL_SETTING_MAP.lng,
-  }, 14);
-
-L.tileLayer(
-  'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-  {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors | Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>',
-  },
-).addTo(mapCanvas);
+const map = L.map('map-canvas');
 
 const mainIcon = L.icon(
   {
@@ -34,8 +23,8 @@ const mainIcon = L.icon(
 
 const mainMarker = L.marker(
   {
-    lat: INITIAL_SETTING_MAP .lat,
-    lng: INITIAL_SETTING_MAP .lng,
+    lat: INITIAL_SETTING_MAP.lat,
+    lng: INITIAL_SETTING_MAP.lng,
   },
   {
     draggable: true,
@@ -43,15 +32,7 @@ const mainMarker = L.marker(
   },
 );
 
-mainMarker.addTo(mapCanvas);
-
-adAddress.value = `${mainMarker._latlng.lat.toFixed(5)}, ${mainMarker._latlng.lng.toFixed(5)}`;
-
-mainMarker.on('moveend', (evt) => {
-  adAddress.value = `${evt.target.getLatLng().lat.toFixed(5)}, ${evt.target.getLatLng().lng.toFixed(5)}`;
-});
-
-const markerGroup = L.layerGroup().addTo(mapCanvas);
+const markerGroup = L.layerGroup().addTo(map);
 
 const createAdMarker = (dataAd) => {
 
@@ -79,14 +60,16 @@ const createAdMarker = (dataAd) => {
   markerAd.addTo(markerGroup).bindPopup(createCard(dataAd));
 };
 
-const createMarkersGroup = (similarAd) => {
-  similarAd.forEach((dataAd) => {
+const createMarkersGroup = (similarAds) => {
+  similarAds.forEach((dataAd) => {
     createAdMarker(dataAd);
   });
 };
 
 const resetDataMap = () => {
-  mapCanvas.setView(
+  markerGroup.clearLayers();
+
+  map.setView(
     INITIAL_SETTING_MAP,
     12);
 
@@ -95,6 +78,39 @@ const resetDataMap = () => {
   );
 
   adAddress.value = `${INITIAL_SETTING_MAP.lat.toFixed(5)}, ${INITIAL_SETTING_MAP.lng.toFixed(5)}`;
+
+  getData((ads) => createMarkersGroup(ads.slice(0, MAX_NUM_ADS)));
 };
 
-export { createAdMarker, resetDataMap, createMarkersGroup };
+map
+  .on('load', () => {
+    activateForm();
+    getData(
+      (ads) => {
+        onFilter(ads);
+        addFilters(ads);
+      },
+      showPopupGetError,
+    );
+  })
+  .setView({
+    lat: INITIAL_SETTING_MAP.lat,
+    lng: INITIAL_SETTING_MAP.lng,
+  }, 12);
+
+L.tileLayer(
+  'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+  {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+  },
+).addTo(map);
+
+mainMarker.addTo(map);
+
+adAddress.value = `${mainMarker._latlng.lat.toFixed(5)}, ${mainMarker._latlng.lng.toFixed(5)}`;
+
+mainMarker.on('moveend', (evt) => {
+  adAddress.value = `${evt.target.getLatLng().lat.toFixed(5)}, ${evt.target.getLatLng().lng.toFixed(5)}`;
+});
+
+export { resetDataMap, markerGroup, createMarkersGroup };

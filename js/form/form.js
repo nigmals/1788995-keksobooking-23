@@ -19,7 +19,6 @@ const adRoomNumberSelect = offerForm.querySelector('#room_number');
 const adTypeSelect = offerForm.querySelector('#type');
 const adTimeInSelect = offerForm.querySelector('#timein');
 const adTimeOutSelect = offerForm.querySelector('#timeout');
-const adAddress = offerForm.querySelector('#address');
 const resetButton = document.querySelector('.ad-form__reset');
 
 const roomsValue = {
@@ -132,4 +131,4 @@ offerForm.addEventListener('submit', (evt) => {
   sendData(showPopupSendSuccess, showPopupSendError, formData);
 });
 
-export { diactivateForm, activateForm, clearForm, adAddress };
+export { diactivateForm, activateForm, clearForm, mapFiltersForm };
