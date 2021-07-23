@@ -5,7 +5,6 @@ import { showPopupSendSuccess, showPopupSendError } from './popup.js';
 const MIN_NAME_LENGTH = 30;
 const MAX_NAME_LENGTH = 100;
 const MAX_PRICE_LENGTH = 1000000;
-const MIN_PRICE_LENGTH = 0;
 const offerForm = document.querySelector('.ad-form');
 const adFormElement = offerForm.querySelectorAll('.ad-form__element');
 const mapFiltersForm = document.querySelector('.map__filters');
@@ -68,11 +67,12 @@ offerTitle.addEventListener('input', () => {
 });
 
 offerPrice.addEventListener('input', () => {
-  const valueInput = offerPrice.value;
+  const valueInput = typePrice[adTypeSelect.value];
+  const priceValue = +offerPrice.value;
 
-  if (valueInput < MIN_PRICE_LENGTH) {
-    offerPrice.setCustomValidity(`Минимальная цена ${MIN_PRICE_LENGTH}`);
-  } else if (valueInput >MAX_PRICE_LENGTH) {
+  if (priceValue < valueInput) {
+    offerPrice.setCustomValidity(`Минимальная цена ${valueInput}`);
+  } else if (priceValue > MAX_PRICE_LENGTH) {
     offerPrice.setCustomValidity(`Максимальная цена ${MAX_PRICE_LENGTH}`);
   } else {
     offerPrice.setCustomValidity('');
