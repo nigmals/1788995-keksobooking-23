@@ -2,7 +2,7 @@ import { activateForm } from '../form/form.js';
 import { createCard } from './cards.js';
 import { getData } from '../form/api.js';
 import { showPopupGetError } from '../form/popup.js';
-import { onFilter, addFilters, MAX_NUM_ADS } from '../map/filter/filter.js';
+import { getFilterData, addFilters, MAX_NUM_ADS } from '../map/filter/filter.js';
 
 const INITIAL_SETTING_MAP = {
   lat: 35.67500,
@@ -87,7 +87,7 @@ map
     activateForm();
     getData(
       (ads) => {
-        onFilter(ads);
+        getFilterData(ads);
         addFilters(ads);
       },
       showPopupGetError,

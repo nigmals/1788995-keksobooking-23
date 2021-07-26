@@ -14,7 +14,6 @@ const onDeletePopup = (evt) => {
   }
 };
 
-
 const showPopupSendSuccess = () => {
   const body = document.querySelector('body');
   const successPopup = document.querySelector('#success').content.querySelector('.success');

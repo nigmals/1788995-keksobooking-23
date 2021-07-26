@@ -6,14 +6,14 @@ const MIN_NAME_LENGTH = 30;
 const MAX_NAME_LENGTH = 100;
 const MAX_PRICE_LENGTH = 1000000;
 const offerForm = document.querySelector('.ad-form');
-const adFormElement = offerForm.querySelectorAll('.ad-form__element');
+const adFormElements = offerForm.querySelectorAll('.ad-form__element');
 const mapFiltersForm = document.querySelector('.map__filters');
 const mapFiltersFormElements = mapFiltersForm.querySelectorAll('.map__filter');
 const mapFiltersFormFeatures = mapFiltersForm.querySelector('.map__features');
 const offerTitle = offerForm.querySelector('#title');
 const offerPrice = offerForm.querySelector('#price');
 const adCapacitySelect = offerForm.querySelector('#capacity');
-const adCapacitySelectOption = adCapacitySelect.querySelectorAll('option');
+const adCapacitySelectOptions = adCapacitySelect.querySelectorAll('option');
 const adRoomNumberSelect = offerForm.querySelector('#room_number');
 const adTypeSelect = offerForm.querySelector('#type');
 const adTimeInSelect = offerForm.querySelector('#timein');
@@ -38,7 +38,7 @@ const typePrice = {
 
 const diactivateForm = () => {
   offerForm.classList.add('ad-form--disabled');
-  adFormElement.forEach((item) => item.setAttribute('disabled', 'disabled'));
+  adFormElements.forEach((item) => item.setAttribute('disabled', 'disabled'));
   mapFiltersForm.classList.add('ad-form--disabled');
   mapFiltersFormElements.forEach((item) => item.setAttribute('disabled', 'disabled'));
   mapFiltersFormFeatures.setAttribute('disabled', 'disabled');
@@ -46,7 +46,7 @@ const diactivateForm = () => {
 
 const activateForm = () => {
   offerForm.classList.remove('ad-form--disabled');
-  adFormElement.forEach((item) => item.removeAttribute('disabled', null));
+  adFormElements.forEach((item) => item.removeAttribute('disabled', null));
   mapFiltersForm.classList.remove('ad-form--disabled');
   mapFiltersFormElements.forEach((item) => item.removeAttribute('disabled', null));
   mapFiltersFormFeatures.removeAttribute('disabled', null);
@@ -80,13 +80,13 @@ offerPrice.addEventListener('input', () => {
   offerPrice.reportValidity();
 });
 
-const onRoomChange = (evt) => {
-  adCapacitySelectOption.forEach((option) => {
+const getRoomChange = (evt) => {
+  adCapacitySelectOptions.forEach((option) => {
     option.disabled = true;
   });
 
   roomsValue[evt.value].forEach((seatsAmount) => {
-    adCapacitySelectOption.forEach((option) => {
+    adCapacitySelectOptions.forEach((option) => {
       if (Number(option.value) === seatsAmount) {
         option.disabled = false;
         option.selected = true;
@@ -95,7 +95,7 @@ const onRoomChange = (evt) => {
   });
 };
 
-onRoomChange(adRoomNumberSelect);
+getRoomChange(adRoomNumberSelect);
 
 adTimeInSelect.addEventListener('change', () => {
   adTimeOutSelect.value = adTimeInSelect.value;
@@ -106,7 +106,7 @@ adTimeOutSelect.addEventListener('change', () => {
 });
 
 adRoomNumberSelect.addEventListener('change', (evt) =>{
-  onRoomChange(evt.target);
+  getRoomChange(evt.target);
 });
 
 adTypeSelect.addEventListener('change', (evt) => {

@@ -20,7 +20,7 @@ const housingRooms = mapFilters.querySelector('#housing-rooms');
 const housingGuests = mapFilters.querySelector('#housing-guests');
 const housingFeatures = mapFilters.querySelectorAll('.map__checkbox');
 
-const onFilter = (ads) => {
+const getFilterData = (ads) => {
   const filteredAds = ads.filter((ad) => {
     if (housingType.value !== DEFAUL_VALUE && ad.offer.type !== housingType.value) {
       return false;
@@ -57,7 +57,7 @@ const onFilter = (ads) => {
 const addFilters = (ads) => {
   const debounced = debounce(() => {
     markerGroup.clearLayers();
-    onFilter(ads);
+    getFilterData(ads);
   });
   housingType.addEventListener('change', debounced);
   housingPrice.addEventListener('change', debounced);
@@ -68,4 +68,4 @@ const addFilters = (ads) => {
   });
 };
 
-export { onFilter, addFilters, MAX_NUM_ADS };
+export { getFilterData, addFilters, MAX_NUM_ADS };
