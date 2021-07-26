@@ -1,5 +1,6 @@
-import { debounce } from '../../utils/utils.js';
+import { getDebounce } from '../../utils/utils.js';
 import { markerGroup, createMarkersGroup } from '../map.js';
+import { makeFilterFormActive } from '../../form/form.js';
 
 const MAX_NUM_ADS = 10;
 const DEFAUL_VALUE = 'any';
@@ -55,7 +56,7 @@ const getFilterData = (ads) => {
 };
 
 const addFilters = (ads) => {
-  const debounced = debounce(() => {
+  const debounced = getDebounce(() => {
     markerGroup.clearLayers();
     getFilterData(ads);
   });
@@ -65,6 +66,7 @@ const addFilters = (ads) => {
   housingGuests.addEventListener('change', debounced);
   housingFeatures.forEach((feature) => {
     feature.addEventListener('change', debounced);
+    makeFilterFormActive();
   });
 };
 

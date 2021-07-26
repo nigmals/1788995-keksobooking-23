@@ -1,4 +1,4 @@
-import { activateForm } from '../form/form.js';
+import { makeAllFormUnactive, makeOfferFormActive } from '../form/form.js';
 import { createCard } from './cards.js';
 import { getData } from '../form/api.js';
 import { showPopupGetError } from '../form/popup.js';
@@ -82,9 +82,11 @@ const resetDataMap = () => {
   getData((ads) => createMarkersGroup(ads.slice(0, MAX_NUM_ADS)));
 };
 
+makeAllFormUnactive();
+
 map
   .on('load', () => {
-    activateForm();
+    makeOfferFormActive();
     getData(
       (ads) => {
         getFilterData(ads);
@@ -108,6 +110,7 @@ L.tileLayer(
 mainMarker.addTo(map);
 
 adAddress.value = `${mainMarker._latlng.lat.toFixed(5)}, ${mainMarker._latlng.lng.toFixed(5)}`;
+
 
 mainMarker.on('moveend', (evt) => {
   adAddress.value = `${evt.target.getLatLng().lat.toFixed(5)}, ${evt.target.getLatLng().lng.toFixed(5)}`;

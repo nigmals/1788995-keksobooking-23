@@ -1,6 +1,7 @@
 import { sendData } from './api.js';
 import { resetDataMap } from '../map/map.js';
 import { showPopupSendSuccess, showPopupSendError } from './popup.js';
+import { resetOfferPreview } from './image.js';
 
 const MIN_NAME_LENGTH = 30;
 const MAX_NAME_LENGTH = 100;
@@ -28,6 +29,8 @@ const roomsValue = {
 
 };
 
+const GUEST_DEFAULT_VAL = 1;
+
 const typePrice = {
   bungalow: 0,
   flat: 1000,
@@ -36,21 +39,28 @@ const typePrice = {
   palace: 10000,
 };
 
-const diactivateForm = () => {
+// делает неактивными все формы
+const makeAllFormUnactive = () => {
   offerForm.classList.add('ad-form--disabled');
-  adFormElements.forEach((item) => item.setAttribute('disabled', 'disabled'));
+  adFormElements.forEach((item) => {
+    item.disabled = true;
+  });
   mapFiltersForm.classList.add('ad-form--disabled');
-  mapFiltersFormElements.forEach((item) => item.setAttribute('disabled', 'disabled'));
-  mapFiltersFormFeatures.setAttribute('disabled', 'disabled');
+  mapFiltersFormElements.forEach((select) => {
+    select.disabled = true;
+  });
+  mapFiltersFormFeatures.disabled = true;
 };
 
-const activateForm = () => {
-  offerForm.classList.remove('ad-form--disabled');
-  adFormElements.forEach((item) => item.removeAttribute('disabled', null));
+// делает активную форму фильтрации меток карты
+const makeFilterFormActive = () => {
   mapFiltersForm.classList.remove('ad-form--disabled');
-  mapFiltersFormElements.forEach((item) => item.removeAttribute('disabled', null));
-  mapFiltersFormFeatures.removeAttribute('disabled', null);
+  mapFiltersFormElements.forEach((select) => {
+    select.disabled = false;
+  });
+  mapFiltersFormFeatures.disabled = false;
 };
+
 
 offerTitle.addEventListener('input', () => {
   const valueLength = offerTitle.value.length;
@@ -80,6 +90,10 @@ offerPrice.addEventListener('input', () => {
   offerPrice.reportValidity();
 });
 
+const setDefaultValues = () => {
+  offerPrice.placeholder =typePrice[adTypeSelect.value];
+  adCapacitySelect.value = GUEST_DEFAULT_VAL;
+};
 const getRoomChange = (evt) => {
   adCapacitySelectOptions.forEach((option) => {
     option.disabled = true;
@@ -117,12 +131,26 @@ adTypeSelect.addEventListener('change', (evt) => {
 const clearForm = () => {
   mapFiltersForm.reset();
   offerForm .reset();
+  resetOfferPreview();
   resetDataMap();
+  setDefaultValues();
 };
-resetButton.addEventListener('click', (evt) => {
-  evt.preventDefault();
-  clearForm();
-});
+
+
+const onClickResetAllButton = () => {
+  resetButton.addEventListener('click', (evt) => {
+    evt.preventDefault();
+    clearForm();
+  });
+};
+
+const makeOfferFormActive = () => {
+  offerForm.classList.remove('ad-form--disabled');
+  adFormElements.forEach((item) => {
+    item.disabled = false;
+  });
+  onClickResetAllButton();
+};
 
 offerForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
@@ -131,4 +159,4 @@ offerForm.addEventListener('submit', (evt) => {
   sendData(showPopupSendSuccess, showPopupSendError, formData);
 });
 
-export { diactivateForm, activateForm, clearForm, mapFiltersForm };
+export { makeAllFormUnactive, makeOfferFormActive, makeFilterFormActive, clearForm, mapFiltersForm };
